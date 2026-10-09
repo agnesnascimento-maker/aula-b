@@ -1,11 +1,9 @@
-<!------COMANDOS------->
-#conferir a versão do node.js
-node -v
-npm -v
+// Forma 1: Com corpo de função (Exige chaves se usar 'return')
+const somar = (a, b) => {
+    return a + b;
+};
 
-#iniciar o projeto node.ls
-npm init -y
+// Forma 2: Retorno implícito (Sem chaves e sem a palavra 'return')
+const somar = (a, b) => a + b;
 
-#Bibliotecas utilizadas
-Express - é uma framework muito utilizada para criação de servidor e APIs.
-CORS-Mecanismoo de segurança que permote o servidor informar quais origens podem acessar o recursos por meio de requisições.
+
