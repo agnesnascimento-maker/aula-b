@@ -18,8 +18,20 @@ const cors = require("cors");
 const fs = require("fs");
 // Importa utilidades para trabalhar com caminhos de arquivos
 const path = require("path");
-// importa o arquivo JSON que contém as raças e fotos
-const cachorros = require("./data/dogs.json");
+
+// Tenta carregar o arquivo dogs.json da pasta data ou da raiz do projeto
+let cachorros = {};
+const jsonPathData = path.join(__dirname, "data", "dogs.json");
+const jsonPathRoot = path.join(__dirname, "dogs.json");
+
+if (fs.existsSync(jsonPathData)) {
+    cachorros = require(jsonPathData);
+} else if (fs.existsSync(jsonPathRoot)) {
+    cachorros = require(jsonPathRoot);
+} else {
+    console.error("⚠️ ATENÇÃO: O arquivo dogs.json não foi encontrado em 'data/dogs.json' nem na raiz!");
+}
+
 // criar a aplicação Express
 const app = express();
 // definir a porta onde o servidor irá rodar
@@ -73,6 +85,13 @@ app.get("/api/cachorros/aleatorio", (req, res) => {
     // flat transforma tudo em um único array
     const todasAsFotos = Object.values(cachorros).flat();
 
+    if (todasAsFotos.length === 0) {
+        return res.status(500).json({
+            status: "error",
+            message: "Nenhuma foto de cachorro encontrada no banco de dados."
+        });
+    }
+
     // sorteia uma foto aleatória
     const item = sortear(todasAsFotos);
 
@@ -93,7 +112,7 @@ app.get("/api/cachorros/aleatorio", (req, res) => {
 app.get("/api/cachorros/:raca", (req, res) => {
 
     //pega o parametro da URL (ex: husky)
-    const raca = req.params.raca.toLocaleLowerCase();
+    const raca = req.params.raca.toLowerCase();
     //params = contém os parâmetros definidos na URL da rota
     //.raca = acessa o parâmetro chamado raca.
 
@@ -130,4 +149,4 @@ app.get("/api/cachorros/:raca", (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
     console.log(`📁 Coloque as fotos manualmente em: data/fotos/`);
-}); 
+});
