@@ -7,11 +7,10 @@ CSS responsável pelo layout da aplicação
 
 
 /* 
-* seleciona TODOS os elementos da página
+* - seleciona TODOS os elementos da página (Corrigido de '-' para '*')
 usado normalmente para resetar estilos padrão do navegador
 */
 * {
-
     /* remove margens padrão */
     margin: 0;
 
@@ -108,7 +107,7 @@ h1 {
     margin-bottom: 20px;
 
     /* altura mínima */
-    min-height: 400px;
+    min-height: 350px;
 
     /* ativa Flexbox */
     display: flex;
@@ -121,6 +120,8 @@ h1 {
 
     /* necessário para posicionar elementos absolutos dentro */
     position: relative;
+
+    overflow: hidden;
 }
 
 
@@ -130,7 +131,10 @@ h1 {
     width: 100%;
 
     /* altura máxima */
-    max-height: 400px;
+    max-height: 350px;
+
+    /* garante exibição como bloco */
+    display: block;
 
     /* mantém proporção da imagem */
     object-fit: contain;
@@ -140,6 +144,11 @@ h1 {
 
     /* muda o cursor para indicar clique */
     cursor: pointer;
+}
+
+/* Oculta a tag de imagem se o atributo src estiver vazio */
+#dogImage[src=""] {
+    display: none;
 }
 
 
@@ -165,6 +174,10 @@ h1 {
 
     /* formato arredondado */
     border-radius: 20px;
+}
+
+#breedName:empty {
+    display: none;
 }
 
 
@@ -211,6 +224,8 @@ button {
 
     /* cursor de botão */
     cursor: pointer;
+
+    transition: background 0.2s;
 }
 
 
